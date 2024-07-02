@@ -17,6 +17,6 @@ namespace WPFTreeView
         /// <summary>
         /// The event that is fired when any child property changes its value
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged = (sender,e) => { };
+        public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
     }
 }
