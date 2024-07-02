@@ -11,6 +11,7 @@ namespace WPFTreeView
     {
         Drive,
         File,
-        Folder
+        Folder,
+        OpenFolder
     }
 }
