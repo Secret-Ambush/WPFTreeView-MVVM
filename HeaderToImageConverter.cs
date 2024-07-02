@@ -1,7 +1,8 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.IO;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
+using WpfTreeView;
 
 namespace WPFTreeView
 {
@@ -17,21 +18,27 @@ namespace WPFTreeView
         
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var path = (String)value;
-
-            //If path is null, ignore
-            if (path == null) { return null; }
-
             var image = "Images/file.png";
 
-            //Get the name of the file/folder
-            var name = DirectoryStructure.GetFileFolderName(path);
-
             //If the name is blank, then it will be a drive
-            if (string.IsNullOrEmpty(name))
-                image = "Images/harddrive.png";
-            else if (new FileInfo(path).Attributes.HasFlag(FileAttributes.Directory))
-                image = "Images/folder.png";
+            switch ((DirectoryItemType)value)
+            {
+                case DirectoryItemType.Drive:
+                    image = "Images/harddrive.png";
+                    break;
+
+                case DirectoryItemType.Folder:
+                    image = "Images/folder.png";
+                    break;
+
+                case DirectoryItemType.OpenFolder:
+                    image = "Images/open-folder.png";
+                    break;
+
+                case DirectoryItemType.File:
+                    break;
+            }
+
 
             return new BitmapImage(new Uri($"pack://application:,,,/{image}"));
 
