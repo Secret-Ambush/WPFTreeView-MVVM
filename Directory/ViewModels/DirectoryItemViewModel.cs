@@ -28,7 +28,7 @@ namespace WPFTreeView
         public string FullPath { get; set; }
 
         /// <summary>
-        /// The name of the itwm
+        /// The name of the item
         /// </summary>
         public string Name { get { return this.Type == DirectoryItemType.Drive ? this.FullPath : DirectoryStructure.GetFileFolderName(this.FullPath); } }
 
@@ -55,7 +55,11 @@ namespace WPFTreeView
                     Expand();
 
                 else
-                    this.ClearChildren();
+                { 
+                    if(this.Type == DirectoryItemType.OpenFolder)
+                        this.Type = DirectoryItemType.Folder;
+                    this.ClearChildren(); 
+                }
             }
         }
 
@@ -108,6 +112,9 @@ namespace WPFTreeView
             var children = DirectoryStructure.GetDirectoryContents(this.FullPath);
             this.Children = new ObservableCollection<DirectoryItemViewModel>(
                             children.Select(content => new DirectoryItemViewModel(content.FullPath, content.Type)));
+            if (this.Type == DirectoryItemType.Folder)
+                this.Type = DirectoryItemType.OpenFolder;
+
         }
     }
 }
